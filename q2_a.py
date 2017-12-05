@@ -40,5 +40,11 @@ for i in range(len(valores)):
     valores[i] = int(valores[i])
 
 
-# [1,3,4,8,6,2]
-print(analisarPadrao([1,4,4,8,6,2]))
+# exemplo de lista que tem o padrão válido: [1,3,4,8,6,2]
+padraoValido = analisarPadrao(valores)
+
+# o mesmo que if padraoValido == True:
+if padraoValido:
+    print("Padrão válido")
+else:
+    print("Padrão inválido")

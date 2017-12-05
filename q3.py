@@ -35,13 +35,13 @@ def centroideDosPontos(arquivo):
         # para ler no arquivo
         while linha != "":
             # transforma a string em uma lista de valores x, y
-            linha = linha.split()
+            ponto = linha.split()
             # linha[0] é o valor x do ponto
             # linha[1] é o valor y do ponto
             # somaX += int(linha[0]). O operador += é um atalho
             # para a operação da linha de baixo.
-            somaX = somaX + float(linha[0])
-            somaY = somaY + float(linha[1])
+            somaX = somaX + float(ponto[0])
+            somaY = somaY + float(ponto[1])
 
             # aumenta a quantidade de pontos, se mais uma linha
             # foi lida com sucesso.
@@ -53,11 +53,16 @@ def centroideDosPontos(arquivo):
 
         # fora do while, dentro do with open
         centroide = (somaX / quantPontos, somaY / quantPontos)
-        print("Centroide: x = %.2f, y = %.2f" % (centroide[0],
-                                                 centroide[1]))
+
+        # Formatando saída do modo antigo. Perceba que as variáveis que vão
+        # substituir os símbolos %.2f DEVEM ESTAR DENTRO DE PARÊNTESES.
+        # %.2f: número float com 2 dígitos depois do ponto flutuante.
+        # Se quisesse 5 dígitos depois do ponto, por exemplo, usaria %.5f.
+        print("Centroide: x = %.2f, y = %.2f" % (centroide[0], centroide[1]))
+        # linha vazia para formatação de saída de acordo com o enunciado
         print()
     # fora do with open
-    return centroide
+    return centroide # retorna a tupla que representa o centroide
 
 
 def pontosNaCircunferencia(arquivo, centroide, raio):
@@ -65,10 +70,15 @@ def pontosNaCircunferencia(arquivo, centroide, raio):
 
 
     with open(arquivo) as entrada:
-        #
+        # Lê a primeira linha para saber se o arquivo é vazio ou não
         linha = entrada.readline()
 
+        # string vazia significa fim do arquivo
         while linha != "":
+
+            # para cada ponto (x,y) calculamos a distância entre esse ponto e o centróide.
+            # Se a distância entre esses dois pontos for menor que o raio, significa que
+            # o ponto está dentro da circunferência.
             ponto = linha.split()
             ponto[0] = float(ponto[0])
             ponto[1] = float(ponto[1])
@@ -83,15 +93,14 @@ def pontosNaCircunferencia(arquivo, centroide, raio):
             if distancia < raio:
                 print("x = %.2f, y = %.2f" % (ponto[0], ponto[1]))
 
+            # Lê mais uma linha do arquivo para dar a possibilidade de sair do loop while,
+            # ou processar mais essa linha.
             linha = entrada.readline()
 
+    # print() apenas para manter o formato de saída igual ao do enunciado.
     print()
     # fora do with open. Fim da função
     return None
-
-
-
-
 
 
 # ------------------ programa principal -------------- #
@@ -102,7 +111,8 @@ nomeArquivo = input()
 
 centroide = centroideDosPontos(nomeArquivo)
 
-
+# Depois que lemos o conteúdo do arquivo para gerar o centróide, devemos ler valores de raio
+# para determinar quais pontos do nosso arquivo de entrada estariam dentro dessa circunferência.
 raio = float(input())
 
 while raio != -1.0:
